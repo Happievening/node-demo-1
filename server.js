@@ -1,7 +1,7 @@
 var http = require("http");
 var fs = require("fs");
 var url = require("url");
-var port = process.argv[2] || process.env.PORT || 8888;
+var port = process.argv[2] || process.env.PORT;
 
 if (!port) {
   console.log("请指定端口号好不啦？\nnode server.js 8888 这样不会吗？");
@@ -22,10 +22,13 @@ var server = http.createServer(function (request, response) {
   console.log("有个傻子发请求过来啦！");
   console.log("路径为：" + path);
   console.log("查询参数为：" + search);
+  console.log("使用的请求方法是：" + method);
+  //   console.log("请求头是：" + request.headers);
 
   if (path === "/") {
     response.statusCode = 200;
     response.setHeader("Content-Type", "text/html;charset=utf-8");
+    response.write(`<link rel="stylesheet" href="style.css">`);
     response.write(`<h1>Hello, world!</h1>`);
     response.end();
   } else if (path === "/style.css") {
